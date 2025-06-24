@@ -1,5 +1,4 @@
-# Astrology Web App using Streamlit + Prokerala SDK Integration with Free/Paid Toggle
-# Dynamically fetches Sun, Moon, Ascendant, Nakshatra, Doshas, Yogas using real birth data
+# vedic_astrology_app.py — Clean version without flatlib or swisseph
 
 import streamlit as st
 from datetime import datetime, date
@@ -112,34 +111,3 @@ st.caption(
     "For entertainment and personal awareness purposes only."
 )
 st.caption("© 2025 Vedic Vishwakarma | Powered by Prokerala Astrology SDK")
-
-# -----------------------------
-# Instagram Promotion Tip
-# -----------------------------
-st.markdown("---")
-st.markdown("📢 **Instagram Reel Caption Template**")
-st.code("""
-🪐 Want to know your real Lagna, Nakshatra & Yogas? 
-✨ Try my FREE astrology tool 🔮
-
-✅ Real D1 chart powered by SDK
-💫 Mangal Dosha, Gaja Kesari, and more
-📄 Premium full PDF reports (optional)
-
-🔗 Click here to get your free chart
-👉 https://vedic-vishwakarma.streamlit.app
-
-🌿 Powered by Vedic knowledge | For personal awareness only
-""", language="markdown")
-
-# -----------------------------
-# Terms and Conditions Snippet
-# -----------------------------
-st.markdown("---")
-st.markdown("📜 **Terms of Use Summary**")
-st.markdown(
-    "This astrology tool is offered for spiritual and informational use. \n"
-    "It does not offer medical or legal advice, and should not be relied on for critical decisions. \n"
-    "All calculations are done via licensed Prokerala SDK, and your data is never stored. \n"
-    "By using this app, you accept full responsibility for how you use the information provided."
-)

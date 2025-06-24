@@ -18,9 +18,15 @@ st.markdown("Enter your birth details to check Manglik Dosha, Kaal Sarp Dosha & 
 name = st.text_input("🧑 Full Name")
 gender = st.selectbox("🚻 Gender", ["Male", "Female", "Other"])
 birth_date = st.date_input("📅 Birth Date", min_value=date(1945, 1, 1), max_value=date.today())
-birth_time = st.time_input("⏰ Birth Time")
-lat = st.number_input("🌐 Latitude", value=17.385044)
-lon = st.number_input("🌐 Longitude", value=78.486671)
+birth_time_str = st.text_input("🕰️ Enter Birth Time (HH:MM, 24hr format)", value="12:00")
+birth_place = st.text_input("📍 Birth Place (City, Country)", value="Hyderabad, India")
+
+# Convert time input safely
+try:
+    birth_time = datetime.strptime(birth_time_str, "%H:%M").time()
+except ValueError:
+    st.warning("⚠️ Invalid time format. Please use HH:MM (24-hour).")
+    birth_time = datetime.strptime("12:00", "%H:%M").time()
 
 if st.button("🔍 Generate Dosha Report"):
     try:
@@ -92,6 +98,15 @@ if st.button("🔍 Generate Dosha Report"):
             gaja_kesari = False
             st.info("⚠️ Gaja Kesari Yoga Not Present")
 
+        # Additional Yogas
+        st.markdown("#### ✨ Additional Yogas")
+        if lagna_house == 1 and moon_house == 5:
+            st.success("🧠 Budha Aditya Yoga likely present: sharp mind, good communication.")
+        if mars_house == 10:
+            st.info("💼 Ruchaka Yoga likely: Strong leadership, valor in profession.")
+        if moon_house == 6 and jupiter_house == 12:
+            st.warning("⚠️ Vipreet Raj Yoga possibility: Strength after struggle.")
+
         # PDF Report
         pdf = FPDF()
         pdf.add_page()
@@ -99,7 +114,8 @@ if st.button("🔍 Generate Dosha Report"):
         pdf.cell(200, 10, txt="Vedic Astrology Basic Report", ln=True, align='C')
         pdf.ln(10)
         pdf.cell(200, 10, txt=f"Name: {name} | Gender: {gender}", ln=True)
-        pdf.cell(200, 10, txt=f"DOB: {birth_date} | Time: {birth_time}", ln=True)
+        pdf.cell(200, 10, txt=f"DOB: {birth_date} | Time: {birth_time_str}", ln=True)
+        pdf.cell(200, 10, txt=f"Birth Place: {birth_place}", ln=True)
         pdf.cell(200, 10, txt=f"Lagna: House {lagna_house}", ln=True)
         pdf.cell(200, 10, txt=f"Manglik Dosha: {'Yes' if manglik else 'No'}", ln=True)
         pdf.cell(200, 10, txt=f"Kaal Sarp Dosha: {'Yes' if kaal_sarp else 'No'}", ln=True)

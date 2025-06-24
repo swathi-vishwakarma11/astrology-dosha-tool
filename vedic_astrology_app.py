@@ -7,115 +7,70 @@ from fpdf import FPDF
 import sys
 import os
 
-# Add the local SDK folder to system path
-sdk_path = os.path.join(os.path.dirname(__file__), 'astrology-sdk')
-if sdk_path not in sys.path:
-    sys.path.insert(0, sdk_path)
+st.set_page_config(page_title="Vedic Astrology | Swathi Vishwakarma", layout="centered")
+st.title("🌟 Book Personal Vedic Astrology Consultation")
 
-from prokerala.client import Client  # ✅ now it will work from the local folder
+st.markdown("""
+### 🙋‍♀️ About Me
+I'm **Swathi Vishwakarma**, a Vedic astrologer and spiritual guide with a deep passion for decoding karmic patterns, past-life influences, and planetary doshas.
 
-st.set_page_config(page_title="Vedic Chart & Dosha Checker", layout="centered")
-st.title("🔮 Free Vedic Astrology Tool (Live SDK-Based)")
-st.markdown("Enter your birth details to generate real chart data with yogas & doshas. Free preview with option for full PDF.")
+I specialize in:
+- 🔮 **Birth Chart Analysis**
+- 💑 **Marriage, Love & Compatibility Insights**
+- 👶 **Delay in Childbirth Remedies**
+- 📿 **Karmic Healing Guidance**
+- 🧿 **Dosha Checks** (Mangal, Nadi, Pitru, Kaal Sarp, etc.)
+- 🕉 **Lal Kitab Remedies & Rituals**
 
-# -----------------------------
-# User Input
-# -----------------------------
-name = st.text_input("🧑 Full Name")
-gender = st.selectbox("🚻 Gender", ["Male", "Female", "Other"])
-birth_date = st.date_input("📅 Birth Date", min_value=date(1945, 1, 1), max_value=date.today())
-birth_time_str = st.text_input("🕰️ Enter Birth Time (HH:MM, 24hr format)", value="12:00")
-birth_place = st.text_input("📍 Birth Place (City, Country)", value="Hyderabad, India")
-latitude = st.text_input("🌐 Latitude", value="17.385044")
-longitude = st.text_input("🌐 Longitude", value="78.486671")
+All sessions are **voice-only** through Instagram (DM/calls).
 
-plan_type = st.radio("📦 Select Mode", ["Free Preview", "Premium (Full Chart)"])
+---
+### 💰 Pricing
+- 🧘‍♀️ One-Time Karmic Reading – ₹999
+- 💕 Compatibility Reading (Couples) – ₹1499
+- 📜 Full PDF Report (Optional Add-on) – ₹199
 
-try:
-    birth_time = datetime.strptime(birth_time_str, "%H:%M").time()
-except ValueError:
-    st.warning("⚠️ Invalid time format. Please use HH:MM (24-hour).")
-    birth_time = datetime.strptime("12:00", "%H:%M").time()
+---
+### 📅 Book a Consultation
+""")
 
-birth_datetime = datetime.combine(birth_date, birth_time)
+name = st.text_input("🧑 Your Full Name")
+contact = st.text_input("📲 Your Instagram Handle or Email")
+birth_date = st.date_input("📅 Date of Birth")
+birth_time = st.time_input("🕐 Time of Birth")
+birth_place = st.text_input("📍 Place of Birth")
+purpose = st.selectbox("💬 What's the purpose of your consultation?", [
+    "General Guidance",
+    "Marriage/Partner Match",
+    "Career & Money",
+    "Health or Delay in Childbirth",
+    "Spiritual/Karmic Insight",
+    "Other"
+])
 
-# -----------------------------
-# Prokerala SDK Setup (Using Streamlit Secrets for security)
-# -----------------------------
-client_id = st.secrets["prokerala"]["client_id"]
-client_secret = st.secrets["prokerala"]["client_secret"]
-
-client = Client(client_id, client_secret)
-
-if st.button("🔍 Generate My Report"):
-    if plan_type == "Free Preview":
-        st.subheader("🌞 Your Sample Chart")
-        st.write("☀️ Sun Sign: Leo")
-        st.write("🌙 Moon Sign: Aquarius")
-        st.write("🔼 Ascendant: Sagittarius")
-        st.write("🌌 Nakshatra: Purvabhadra")
-
-        st.markdown("### 🧿 Yogas & Doshas")
-        st.success("✅ Gaja Kesari Yoga")
-        st.warning("⚠️ Mangal Dosha Detected")
-
-        st.info("🔓 Upgrade to Premium to get your real birth chart & PDF report.")
-
+if st.button("📩 Request Booking"):
+    if name and contact and birth_place:
+        st.success(f"✅ Thank you {name}! I will contact you via {contact} within 24 hours. 💌")
+        st.caption("🔔 Please make sure you're following [@vedic.vishwakarma](https://instagram.com/vedic.vishwakarma) on Instagram to receive messages.")
     else:
-        try:
-            st.info("🔮 Fetching your chart using SDK...")
-            response = client.astrology.birth_details(
-                datetime=birth_datetime,
-                latitude=float(latitude),
-                longitude=float(longitude)
-            )
+        st.warning("⚠️ Please fill in all the required fields including birth place.")
 
-            sun_sign = response.sun.sign.name
-            moon_sign = response.moon.sign.name
-            asc_sign = response.ascendant.sign.name
-            nakshatra = response.moon.nakshatra.name
+st.markdown("""
+---
+### 💳 Payment QR Code
+Scan the QR code below to complete your payment:
+""")
 
-            st.subheader("🌞 Your Birth Chart Highlights")
-            st.write(f"☀️ Sun Sign: {sun_sign}")
-            st.write(f"🌙 Moon Sign: {moon_sign}")
-            st.write(f"🔼 Ascendant: {asc_sign}")
-            st.write(f"🌌 Nakshatra: {nakshatra}")
+st.image("payment_qr.png", caption="Pay via UPI or any mobile wallet", width=250)
 
-            st.markdown("### 🧿 Detected Yogas & Doshas")
-            st.success("✅ Gaja Kesari Yoga")
-            st.caption("🌕 Moon in kendra with Jupiter")
-            st.warning("⚠️ Mangal Dosha Detected")
-            st.caption("🔥 Mars in Mangalic house")
+st.markdown("""
+---
+### 📜 Terms & Privacy
+- This consultation is based on Vedic astrology principles and is for self-awareness and spiritual growth.
+- I do not store or misuse your birth details.
+- Payment is to be made before consultation (details will be shared privately).
+- No refunds once session starts.
 
-            st.markdown("### 📥 Download PDF Report")
-            pdf = FPDF()
-            pdf.add_page()
-            pdf.set_font("Arial", size=12)
-            pdf.cell(200, 10, txt="Vedic Astrology Report", ln=True, align='C')
-            pdf.ln(10)
-            pdf.cell(200, 10, txt=f"Name: {name} | Gender: {gender}", ln=True)
-            pdf.cell(200, 10, txt=f"DOB: {birth_date} | Time: {birth_time_str}", ln=True)
-            pdf.cell(200, 10, txt=f"Place: {birth_place}", ln=True)
-            pdf.cell(200, 10, txt=f"Sun: {sun_sign} | Moon: {moon_sign} | Asc: {asc_sign}", ln=True)
-            pdf.cell(200, 10, txt=f"Nakshatra: {nakshatra}", ln=True)
-            pdf.cell(200, 10, txt=f"Yogas: Gaja Kesari", ln=True)
-            buffer = BytesIO()
-            pdf.output(buffer)
-            st.download_button("📥 Download Report (PDF)", data=buffer.getvalue(), file_name="Your_Vedic_Report.pdf", mime="application/pdf")
-
-        except Exception as e:
-            st.error(f"Something went wrong: {e}")
-
-# -----------------------------
-# Legal & Privacy Disclaimer
-# -----------------------------
-st.markdown("---")
-st.markdown("🔒 **Terms, Privacy & Legal Notice**")
-st.caption(
-    "This tool is intended for spiritual insight and personal reflection only. It does not substitute professional medical, legal, or psychological advice.\n"
-    "Astrological interpretations are provided using Prokerala's official SDK. All data is generated in real-time using your input, and no birth data is stored or shared.\n"
-    "This app operates under Prokerala's fair-use API guidelines. Your usage of this site indicates agreement with our terms.\n"
-    "By using this tool, you accept that any decisions you make based on this content are your own responsibility.\n"
-    "For entertainment and personal awareness purposes only."
-)
-st.caption("© 2025 Vedic Vishwakarma | Powered by Prokerala Astrology SDK")
+---
+© 2025 Vedic Vishwakarma | DM for collaborations
+""")

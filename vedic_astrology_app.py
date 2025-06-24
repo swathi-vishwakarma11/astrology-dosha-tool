@@ -8,25 +8,25 @@ import requests
 import json
 
 st.set_page_config(page_title="Vedic Astrology | Swathi Vishwakarma", layout="centered")
-st.title("✨ Book Your Personal Vedic Astrology Consultation ✨")
+st.title("🌠 Book Your Personal Vedic Astrology Consultation ✨")
 
 st.markdown("""
 ---
 ### ✨ Astrology Services & Charges ✨
 
-🔹 **Lagna Chart + Doubt Clearing (Messages)** – ₹999  
-Know your chart. Ask anything. Get clear answers.
+💫 **Lagna Chart + Doubt Clearing (Messages)** – ₹999  
+Know your chart. Ask anything. Receive crystal-clear answers.
 
-🔹 **30-Min Focused Call (Love / Career / Health)** – ₹1999  
-One topic. Straightforward guidance and remedies.
+💫 **30-Min Focused Call (Love / Career / Health)** – ₹1999  
+One topic. Pinpointed insights. Powerful remedies.
 
-🔹 **1-Hour Full Chart Call** – ₹3999  
-All areas covered + Remedies + PDF summary.
+💫 **1-Hour Full Chart Call** – ₹3999  
+Deep dive into all areas + Customized Remedies + PDF Report.
 
-🔹 **Two Charts Reading** – ₹5000  
-For those on a shared journey — deep connection insights.
+💫 **Two Charts Reading** – ₹5000  
+Twin flame or compatibility? Discover shared soul patterns.
 
-🪐 *Your Lagna Chart holds the truth — I’ll help you understand it with clarity.*
+🪐 *Your Lagna Chart reveals the truth — I’ll help you see it with soul-level clarity.*
 """)
 
 st.markdown("""
@@ -88,16 +88,16 @@ if st.button("📩 Confirm Booking"):
 
 st.markdown("""
 ---
-### 💡 What You’ll Gain From a Reading
+### 🌟 What You’ll Experience in a Reading
 
 🔭 **Accurate Horoscope Interpretation & Karmic Guidance**  
 ❤️ **Relationship Compatibility, Twin Flame & Soulmate Karma**  
-👶 **Delay in Conception, Fertility & Health Blocks Cleansing**  
+👶 **Conception Delay, Fertility & Health Karma Cleansing**  
 💼 **Career Destiny Clarity & Wealth Block Removal**  
-🧿 **Powerful Dosha Analysis + Energy Cleansing Rituals**  
-🕉 **Personalized Lal Kitab Remedies & Spiritual Healing**
+🧿 **Dosha Diagnosis & Deep Energy Cleansing Rituals**  
+🕉 **Lal Kitab Remedies & Personalized Spiritual Guidance**
 
-✨ *Every consultation is deeply intuitive, spiritually guided, and leaves you with clarity you’ll never regret.*
+✨ *Each session brings divine clarity, emotional relief, and actionable solutions you'll be grateful for.*
 """)
 
 st.markdown("""
@@ -117,11 +117,11 @@ Pay through any UPI app using the ID below:
 st.markdown("""
 ---
 ### 🔐 Privacy & Terms
-- All sessions are deeply personal, intuitive and rooted in traditional Vedic astrology.
-- Your data is never stored, sold or reused.
-- Consultations are prepaid and non-refundable once started.
+- Your birth details are sacred — never shared or misused.
+- All sessions are one-on-one and energetically protected.
+- Prepaid bookings only. Non-refundable after session starts.
 
 ---
-🪷 **Copyright © 2025 Vedic Vishwakarma**  
-✨ Follow [@vedic.vishwakarma](https://instagram.com/vedic.vishwakarma) for daily astro tips & healing codes 🌙
+🪷 **© 2025 Vedic Vishwakarma**  
+🌙 Follow [@vedic.vishwakarma](https://instagram.com/vedic.vishwakarma) for daily spiritual wisdom.
 """)

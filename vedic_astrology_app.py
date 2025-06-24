@@ -11,8 +11,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import smtplib
 from email.message import EmailMessage
-from flatlib import const
+from flatlib import const, ephem
 from flatlib.chart import Chart
+
+# Disable Swiss Ephemeris for Streamlit Cloud
+ephem.set_ephem(None)
 from flatlib.datetime import Datetime
 from flatlib.geopos import GeoPos
 
@@ -44,7 +47,7 @@ if st.button("🔍 Generate Dosha & Chart Report"):
         birth_datetime = datetime.combine(birth_date, birth_time)
         utc_dt = birth_datetime.strftime("%Y/%m/%d %H:%M")
         pos = GeoPos(latitude, longitude)
-        chart = Chart(Datetime(utc_dt, "UTC"), pos)
+        chart = Chart(Datetime(utc_dt, "UTC"), pos, IDs=None)
 
         # Moon, Sun and Ascendant
         moon = chart.get(const.MOON)
@@ -131,3 +134,4 @@ if st.button("🔍 Generate Dosha & Chart Report"):
 
     except Exception as e:
         st.error(f"Something went wrong: {e}")
+

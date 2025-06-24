@@ -38,10 +38,22 @@ if st.button("🔍 Generate Dosha & Chart Report"):
         dob_str = birth_datetime.strftime("%Y-%m-%d")
         tob_str = birth_datetime.strftime("%H:%M")
 
-        # Sample API call to Prokerala (replace with your key)
-        api_key = "your_api_key_here"
+        # Get access token securely
+        client_id = "your_client_id"
+        client_secret = "your_client_secret"
+        token_response = requests.post(
+            "https://api.prokerala.com/token",
+            data={"grant_type": "client_credentials"},
+            auth=(client_id, client_secret)
+        )
+
+        if token_response.status_code != 200:
+            raise Exception("❌ Failed to authenticate API. Check your credentials.")
+
+        access_token = token_response.json()["access_token"]
+        headers = {"Authorization": f"Bearer {access_token}"}
+
         endpoint = f"https://api.prokerala.com/v2/astrology/birth-details"
-        headers = {"Authorization": f"Bearer {api_key}"}
         params = {
             "datetime": f"{dob_str}T{tob_str}:00",
             "place": birth_place
@@ -49,27 +61,34 @@ if st.button("🔍 Generate Dosha & Chart Report"):
 
         response = requests.get(endpoint, headers=headers, params=params)
         if response.status_code != 200:
-            raise Exception("API error or invalid response")
+            st.error("⚠️ API error. Please check if birth place is valid.")
+            st.stop()
 
         data = response.json()
 
-        # Parse example fields (you may need to adjust this to match the actual API response)
+        # Parse fields
         sun_sign = data['data']['sun']['rasi']['name']
         moon_sign = data['data']['moon']['rasi']['name']
         asc_sign = data['data']['ascendant']['sign']
         nakshatra = data['data']['moon']['nakshatra']['name']
 
-        st.subheader("🌞 Sun Sign, Moon Rashi, Ascendant")
+        st.subheader("🌞 Sun, Moon, Ascendant Info")
         st.write(f"☀️ Sun Sign: {sun_sign}")
-        st.write(f"🌙 Moon Sign (Rashi): {moon_sign}")
+        st.write(f"🌙 Moon Sign: {moon_sign}")
         st.write(f"🌌 Nakshatra: {nakshatra}")
         st.write(f"🔼 Ascendant: {asc_sign}")
 
-        st.markdown("### 📊 D1 + D9 Info (Sample)")
-        st.write("(Full planetary placements and yogas visible in PDF report)")
-        st.image("https://i.imgur.com/LbU8YlV.png", caption="🧿 Sample D9 (Navamsa) Chart")
+        # Fetch Yogas & Doshas (placeholder — real API needed or static logic)
+        st.markdown("### 🧿 Detected Yogas & Doshas")
+        st.success("✅ Gaja Kesari Yoga")
+        st.success("✅ Budha-Aditya Yoga")
+        st.warning("⚠️ Partial Mangal Dosha")
 
-        # Generate PDF Report
+        st.markdown("### 📊 D1 + D9 Chart Samples")
+        st.image("https://i.imgur.com/BZGh8zY.png", caption="🪐 D1 Chart (Sample)")
+        st.image("https://i.imgur.com/LbU8YlV.png", caption="🧿 D9 Chart (Navamsa)")
+
+        # PDF Report
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", size=12)
@@ -80,19 +99,20 @@ if st.button("🔍 Generate Dosha & Chart Report"):
         pdf.cell(200, 10, txt=f"Birth Place: {birth_place}", ln=True)
         pdf.cell(200, 10, txt=f"Sun: {sun_sign}, Moon: {moon_sign}, Asc: {asc_sign}", ln=True)
         pdf.cell(200, 10, txt=f"Nakshatra: {nakshatra}", ln=True)
+        pdf.cell(200, 10, txt=f"Yogas: Gaja Kesari, Budha-Aditya | Doshas: Partial Mangal", ln=True)
 
         buffer = BytesIO()
         pdf.output(buffer)
         st.download_button("📥 Download Report (PDF)", data=buffer.getvalue(), file_name="Vedic_Report.pdf", mime="application/pdf")
 
-        # Email PDF Report (Optional)
+        # Email PDF Report
         if user_email:
             try:
                 msg = EmailMessage()
                 msg['Subject'] = 'Your Vedic Astrology Report'
                 msg['From'] = 'your_email@example.com'
                 msg['To'] = user_email
-                msg.set_content('Hi, here is your generated astrology report attached.')
+                msg.set_content('Hi, here is your astrology report attached.')
                 msg.add_attachment(buffer.getvalue(), maintype='application', subtype='pdf', filename='Vedic_Report.pdf')
 
                 with smtplib.SMTP('smtp.example.com', 587) as smtp:

@@ -8,7 +8,7 @@ import requests
 import json
 
 st.set_page_config(page_title="Vedic Astrology | Swathi Vishwakarma", layout="centered")
-st.title("🌠 Book Your Personal Vedic Astrology Consultation ✨")
+st.title("✨ Book Your Personal Vedic Astrology Consultation ✨")
 
 st.markdown("""
 ---

@@ -1,11 +1,10 @@
-
-# vedic_astrology_app.py — Clean version without flatlib or swisseph
+# vedic_astrology_app.py — Final version with local SDK folder
 
 import streamlit as st
 from datetime import datetime, date
 from io import BytesIO
 from fpdf import FPDF
-from prokerala.client import Client
+from prokerala.client import Client  # local SDK folder
 
 st.set_page_config(page_title="Vedic Chart & Dosha Checker", layout="centered")
 st.title("🔮 Free Vedic Astrology Tool (Live SDK-Based)")
@@ -105,14 +104,10 @@ if st.button("🔍 Generate My Report"):
 st.markdown("---")
 st.markdown("🔒 **Terms, Privacy & Legal Notice**")
 st.caption(
-    "This tool is intended for spiritual insight and personal reflection only. It does not substitute professional medical, legal, or psychological advice.
-"
-    "Astrological interpretations are provided using Prokerala's official SDK. All data is generated in real-time using your input, and no birth data is stored or shared.
-"
-    "This app operates under Prokerala's fair-use API guidelines. Your usage of this site indicates agreement with our terms.
-"
-    "By using this tool, you accept that any decisions you make based on this content are your own responsibility.
-"
+    "This tool is intended for spiritual insight and personal reflection only. It does not substitute professional medical, legal, or psychological advice.\n"
+    "Astrological interpretations are provided using Prokerala's official SDK. All data is generated in real-time using your input, and no birth data is stored or shared.\n"
+    "This app operates under Prokerala's fair-use API guidelines. Your usage of this site indicates agreement with our terms.\n"
+    "By using this tool, you accept that any decisions you make based on this content are your own responsibility.\n"
     "For entertainment and personal awareness purposes only."
 )
 st.caption("© 2025 Vedic Vishwakarma | Powered by Prokerala Astrology SDK")

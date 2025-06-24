@@ -2,3 +2,4 @@ streamlit
 flatlib
 pyswisseph
 fpdf
+matplotlib

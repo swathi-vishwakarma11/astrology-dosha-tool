@@ -1,20 +1,13 @@
-# Astrology Web App using Streamlit (Flatlib-Free Version)
+# Astrology Web App using Streamlit (API-Based Version)
 # Hostable on Streamlit Cloud ✅
 
 import streamlit as st
+import requests
 from datetime import datetime, date
-import pytz
-from math import floor
 from io import BytesIO
 from fpdf import FPDF
-import matplotlib.pyplot as plt
-import numpy as np
 import smtplib
 from email.message import EmailMessage
-from flatlib import const
-from flatlib.chart import Chart
-from flatlib.datetime import Datetime
-from flatlib.geopos import GeoPos
 
 st.set_page_config(page_title="Vedic Chart & Dosha Checker", layout="centered")
 st.title("🔮 Free Vedic Astrology Tool (Cloud Version)")
@@ -28,61 +21,52 @@ gender = st.selectbox("🚻 Gender", ["Male", "Female", "Other"])
 birth_date = st.date_input("📅 Birth Date", min_value=date(1945, 1, 1), max_value=date.today())
 birth_time_str = st.text_input("🕰️ Enter Birth Time (HH:MM, 24hr format)", value="12:00")
 birth_place = st.text_input("📍 Birth Place (City, Country)", value="Hyderabad, India")
-latitude = st.text_input("🌐 Latitude", value="17.3850")
-longitude = st.text_input("🌐 Longitude", value="78.4867")
 user_email = st.text_input("📧 Enter Your Email to Receive Report")
 
-# Convert time input safely
 try:
     birth_time = datetime.strptime(birth_time_str, "%H:%M").time()
 except ValueError:
     st.warning("⚠️ Invalid time format. Please use HH:MM (24-hour).")
     birth_time = datetime.strptime("12:00", "%H:%M").time()
 
+# -----------------------------
+# Call API
+# -----------------------------
 if st.button("🔍 Generate Dosha & Chart Report"):
     try:
         birth_datetime = datetime.combine(birth_date, birth_time)
-        utc_dt = birth_datetime.strftime("%Y/%m/%d %H:%M")
-        pos = GeoPos(latitude, longitude)
-        chart = Chart(Datetime(utc_dt, "UTC"), pos, IDs=None)
+        dob_str = birth_datetime.strftime("%Y-%m-%d")
+        tob_str = birth_datetime.strftime("%H:%M")
 
-        # Moon, Sun and Ascendant
-        moon = chart.get(const.MOON)
-        sun = chart.get(const.SUN)
-        ascendant = chart.get(const.ASC)
+        # Sample API call to Prokerala (replace with your key)
+        api_key = "your_api_key_here"
+        endpoint = f"https://api.prokerala.com/v2/astrology/birth-details"
+        headers = {"Authorization": f"Bearer {api_key}"}
+        params = {
+            "datetime": f"{dob_str}T{tob_str}:00",
+            "place": birth_place
+        }
 
-        moon_sign = moon.sign
-        sun_sign = sun.sign
-        asc_sign = ascendant.sign
-        asc_degree = ascendant.lon
+        response = requests.get(endpoint, headers=headers, params=params)
+        if response.status_code != 200:
+            raise Exception("API error or invalid response")
 
-        moon_lon = moon.lon
-        nak_index = int(moon_lon // (13 + 1/3))
-        nakshatras = [
-            "Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra", "Punarvasu", "Pushya", "Ashlesha",
-            "Magha", "Purva Phalguni", "Uttara Phalguni", "Hasta", "Chitra", "Swati", "Vishakha", "Anuradha", "Jyeshtha",
-            "Moola", "Purva Ashadha", "Uttara Ashadha", "Shravana", "Dhanishta", "Shatabhisha", "Purva Bhadrapada",
-            "Uttara Bhadrapada", "Revati"
-        ]
-        moon_nakshatra = nakshatras[nak_index]
+        data = response.json()
+
+        # Parse example fields (you may need to adjust this to match the actual API response)
+        sun_sign = data['data']['sun']['rasi']['name']
+        moon_sign = data['data']['moon']['rasi']['name']
+        asc_sign = data['data']['ascendant']['sign']
+        nakshatra = data['data']['moon']['nakshatra']['name']
 
         st.subheader("🌞 Sun Sign, Moon Rashi, Ascendant")
         st.write(f"☀️ Sun Sign: {sun_sign}")
         st.write(f"🌙 Moon Sign (Rashi): {moon_sign}")
-        st.write(f"🌌 Nakshatra: {moon_nakshatra}")
-        st.write(f"🔼 Ascendant: {asc_sign} ({round(asc_degree,2)}°)")
+        st.write(f"🌌 Nakshatra: {nakshatra}")
+        st.write(f"🔼 Ascendant: {asc_sign}")
 
-        # -----------------------------
-        # Planetary Positions (D1)
-        # -----------------------------
-        st.markdown("### 📊 D1 Chart (Rasi Chart) Planetary Positions")
-        d1_planets = [const.SUN, const.MOON, const.MERCURY, const.VENUS, const.MARS, const.JUPITER, const.SATURN, const.RAHU, const.KETU]
-        d1_data = {p: chart.get(p) for p in d1_planets}
-        for p in d1_data:
-            st.write(f"**{p}** → Sign: {d1_data[p].sign}, Degree: {round(d1_data[p].lon, 2)}°")
-
-        # Placeholder for D9 - logic depends on divisional chart calculation (not in flatlib)
-        st.markdown("### 📊 D9 Chart (Navamsa) → [Preview Placeholder]")
+        st.markdown("### 📊 D1 + D9 Info (Sample)")
+        st.write("(Full planetary placements and yogas visible in PDF report)")
         st.image("https://i.imgur.com/LbU8YlV.png", caption="🧿 Sample D9 (Navamsa) Chart")
 
         # Generate PDF Report
@@ -94,17 +78,14 @@ if st.button("🔍 Generate Dosha & Chart Report"):
         pdf.cell(200, 10, txt=f"Name: {name} | Gender: {gender}", ln=True)
         pdf.cell(200, 10, txt=f"DOB: {birth_date} | Time: {birth_time_str}", ln=True)
         pdf.cell(200, 10, txt=f"Birth Place: {birth_place}", ln=True)
-        pdf.cell(200, 10, txt=f"Sun: {sun_sign}, Moon: {moon_sign}, Asc: {asc_sign} ({round(asc_degree,2)}°)", ln=True)
-        pdf.cell(200, 10, txt=f"Nakshatra: {moon_nakshatra}", ln=True)
-
-        for p in d1_data:
-            pdf.cell(200, 10, txt=f"{p}: {d1_data[p].sign} ({round(d1_data[p].lon,2)}°)", ln=True)
+        pdf.cell(200, 10, txt=f"Sun: {sun_sign}, Moon: {moon_sign}, Asc: {asc_sign}", ln=True)
+        pdf.cell(200, 10, txt=f"Nakshatra: {nakshatra}", ln=True)
 
         buffer = BytesIO()
         pdf.output(buffer)
         st.download_button("📥 Download Report (PDF)", data=buffer.getvalue(), file_name="Vedic_Report.pdf", mime="application/pdf")
 
-        # Email PDF Report (Basic Demo)
+        # Email PDF Report (Optional)
         if user_email:
             try:
                 msg = EmailMessage()

@@ -3,3 +3,5 @@ flatlib
 pyswisseph
 fpdf
 matplotlib
+numpy
+

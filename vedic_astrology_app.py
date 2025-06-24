@@ -49,6 +49,9 @@ if st.button("🔍 Generate Dosha Report"):
         # Lagna chart image (optional visual aid)
         st.image("https://i.imgur.com/tbL3VTx.png", caption="🌀 Sample Lagna Chart")
 
+        # Navamsa chart image placeholder
+        st.image("https://i.imgur.com/LbU8YlV.png", caption="🧿 Sample Navamsa Chart")
+
         # Manglik Dosha Check (simplified logic)
         if str(mars_house) in ['1', '2', '4', '7', '8', '12']:
             manglik = True

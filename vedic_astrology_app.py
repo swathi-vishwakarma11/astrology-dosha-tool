@@ -11,11 +11,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import smtplib
 from email.message import EmailMessage
-from flatlib import const, ephem
-from flatlib.chart import Chart
-
-# Disable Swiss Ephemeris for Streamlit Cloud
+from flatlib import const
+from flatlib.ephem import ephem
 ephem.set_ephem(None)
+from flatlib.chart import Chart
 from flatlib.datetime import Datetime
 from flatlib.geopos import GeoPos
 
@@ -134,4 +133,3 @@ if st.button("🔍 Generate Dosha & Chart Report"):
 
     except Exception as e:
         st.error(f"Something went wrong: {e}")
-

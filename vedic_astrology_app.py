@@ -12,6 +12,19 @@ st.title("🌠 Book Your Personal Vedic Astrology Consultation ✨")
 
 st.markdown("""
 ---
+🔭 **Horoscope | Twin Flame | Career | Health | Lal Kitab**
+
+❤️ **Relationship & Soulmate Karma**
+💼 **Career Block Release + Wealth Remedies**
+👶 **Health, Fertility & Childbirth Karma**
+🧿 **Powerful Dosha Analysis + Energy Healing**
+🕉 **Customized Lal Kitab Rituals**
+
+✨ *One soul reading can change everything.*
+""")
+
+st.markdown("""
+---
 ### ✨ Astrology Services & Charges ✨
 
 💫 **Lagna Chart + Doubt Clearing (Messages)** – ₹999  
@@ -85,20 +98,6 @@ if st.button("📩 Confirm Booking"):
         st.info("🔔 Make sure you're following [@vedic.vishwakarma](https://instagram.com/vedic.vishwakarma) on Instagram to receive messages.")
     else:
         st.warning("⚠️ Please fill in your name, contact and place of birth.")
-
-st.markdown("""
----
-### 🌟 What You’ll Experience in a Reading
-
-🔭 **Accurate Horoscope Interpretation & Karmic Guidance**  
-❤️ **Relationship Compatibility, Twin Flame & Soulmate Karma**  
-👶 **Conception Delay, Fertility & Health Karma Cleansing**  
-💼 **Career Destiny Clarity & Wealth Block Removal**  
-🧿 **Dosha Diagnosis & Deep Energy Cleansing Rituals**  
-🕉 **Lal Kitab Remedies & Personalized Spiritual Guidance**
-
-✨ *Each session brings divine clarity, emotional relief, and actionable solutions you'll be grateful for.*
-""")
 
 st.markdown("""
 ---

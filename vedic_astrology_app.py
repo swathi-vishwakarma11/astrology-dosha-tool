@@ -4,7 +4,15 @@ import streamlit as st
 from datetime import datetime, date
 from io import BytesIO
 from fpdf import FPDF
-from prokerala.client import Client  # local SDK folder
+import sys
+import os
+
+# Add the local SDK folder to system path
+sdk_path = os.path.join(os.path.dirname(__file__), 'astrology-sdk')
+if sdk_path not in sys.path:
+    sys.path.insert(0, sdk_path)
+
+from prokerala.client import Client  # ✅ now it will work from the local folder
 
 st.set_page_config(page_title="Vedic Chart & Dosha Checker", layout="centered")
 st.title("🔮 Free Vedic Astrology Tool (Live SDK-Based)")

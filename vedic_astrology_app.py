@@ -12,15 +12,13 @@ st.title("🌠 Book Your Personal Vedic Astrology Consultation ✨")
 
 st.markdown("""
 ---
-🔭 **Horoscope | Twin Flame | Career | Health | Lal Kitab**
+🔭 **Horoscope • Twin Flame • Career • Health • Lal Kitab**
 
-❤️ **Relationship & Soulmate Karma**
-💼 **Career Block Release + Wealth Remedies**
-👶 **Health, Fertility & Childbirth Karma**
-🧿 **Powerful Dosha Analysis + Energy Healing**
-🕉 **Customized Lal Kitab Rituals**
+❤️ **Soulmate Compatibility**  💼 **Career Blocks Removal**  
+👶 **Health & Fertility Karma** 🧿 **Energy Cleansing Rituals**  
+🕉 **Lal Kitab Healing**
 
-✨ *One soul reading can change everything.*
+✨ *Your soul holds answers — let’s uncover them.*
 """)
 
 st.markdown("""
@@ -40,6 +38,20 @@ Deep dive into all areas + Customized Remedies + PDF Report.
 Twin flame or compatibility? Discover shared soul patterns.
 
 🪐 *Your Lagna Chart reveals the truth — I’ll help you see it with soul-level clarity.*
+""")
+
+st.markdown("""
+---
+### 💰 UPI Payment Details
+Pay through any UPI app using the ID below:
+
+```
+📲 UPI ID: swathiastro@upi
+```
+
+✅ Once paid, send a *screenshot* via DM or email. You can also take a screenshot here.
+
+📌 *Booking will be confirmed after successful payment.*
 """)
 
 st.markdown("""
@@ -98,20 +110,6 @@ if st.button("📩 Confirm Booking"):
         st.info("🔔 Make sure you're following [@vedic.vishwakarma](https://instagram.com/vedic.vishwakarma) on Instagram to receive messages.")
     else:
         st.warning("⚠️ Please fill in your name, contact and place of birth.")
-
-st.markdown("""
----
-### 💰 UPI Payment Details
-Pay through any UPI app using the ID below:
-
-```
-📲 UPI ID: swathiastro@upi
-```
-
-✅ Once paid, send a *screenshot* via DM or email. You can also take a screenshot here.
-
-📌 *Booking will be confirmed after successful payment.*
-""")
 
 st.markdown("""
 ---

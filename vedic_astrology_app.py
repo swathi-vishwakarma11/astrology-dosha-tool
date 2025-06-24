@@ -1,4 +1,4 @@
-# vedic_astrology_app.py — Final version with local SDK folder + Google Sheet + Email Notification
+# vedic_astrology_app.py — Final version with updated pricing, UPI, and enhanced offers
 
 import streamlit as st
 from datetime import datetime, date
@@ -8,30 +8,25 @@ import requests
 import json
 
 st.set_page_config(page_title="Vedic Astrology | Swathi Vishwakarma", layout="centered")
-st.title("🌠 Book Your Personal Vedic Astrology Consultation")
-
-st.markdown("""
-### 🌺 About Swathi Vishwakarma
-Namaste! I'm **Swathi Vishwakarma**, your Vedic Astrologer and spiritual confidante. With years of deep scriptural study and intuitive practice, I help decode your destiny through:
-
-🔭 **Accurate Horoscope Interpretation**  
-❤️ **Relationship Compatibility & Twin Flame Checks**  
-👶 **Delay in Conception & Health Karma**  
-💼 **Career Path & Wealth Remedies**  
-🧿 **Powerful Dosha Analysis & Cleansing**  
-🕉 **Customized Lal Kitab Solutions & Rituals**
-
-📞 *Voice-only sessions via Instagram or Email*
-""")
+st.title("🌠 Book Your Personal Vedic Astrology Consultation ✨")
 
 st.markdown("""
 ---
-### 💸 Consultation Packages
-- 🌟 *One-Time Karmic Reading* – ₹999
-- 💖 *Relationship/Compatibility Session (for couples)* – ₹1499
-- 📄 *Detailed PDF Report (Optional)* – ₹199
+### ✨ Astrology Services & Charges ✨
 
-📌 *Each session includes powerful intuitive insights + personalized remedies.*
+🔹 **Lagna Chart + Doubt Clearing (Messages)** – ₹999  
+Know your chart. Ask anything. Get clear answers.
+
+🔹 **30-Min Focused Call (Love / Career / Health)** – ₹1999  
+One topic. Straightforward guidance and remedies.
+
+🔹 **1-Hour Full Chart Call** – ₹3999  
+All areas covered + Remedies + PDF summary.
+
+🔹 **Two Charts Reading** – ₹5000  
+For those on a shared journey — deep connection insights.
+
+🪐 *Your Lagna Chart holds the truth — I’ll help you understand it with clarity.*
 """)
 
 st.markdown("""
@@ -93,26 +88,40 @@ if st.button("📩 Confirm Booking"):
 
 st.markdown("""
 ---
+### 💡 What You’ll Gain From a Reading
+
+🔭 **Accurate Horoscope Interpretation & Karmic Guidance**  
+❤️ **Relationship Compatibility, Twin Flame & Soulmate Karma**  
+👶 **Delay in Conception, Fertility & Health Blocks Cleansing**  
+💼 **Career Destiny Clarity & Wealth Block Removal**  
+🧿 **Powerful Dosha Analysis + Energy Cleansing Rituals**  
+🕉 **Personalized Lal Kitab Remedies & Spiritual Healing**
+
+✨ *Every consultation is deeply intuitive, spiritually guided, and leaves you with clarity you’ll never regret.*
+""")
+
+st.markdown("""
+---
 ### 💰 UPI Payment Details
-Pay through any UPI app using the following ID:
+Pay through any UPI app using the ID below:
 
 ```
 📲 UPI ID: swathiastro@upi
 ```
 
-✅ Once paid, send the screenshot to [@vedic.vishwakarma](https://instagram.com/vedic.vishwakarma) or your provided email.
+✅ Once paid, send a *screenshot* via DM or email. You can also take a screenshot here.
 
-📌 *Booking is confirmed only after payment.*
+📌 *Booking will be confirmed after successful payment.*
 """)
 
 st.markdown("""
 ---
 ### 🔐 Privacy & Terms
-- All consultations are private, personalized and based on traditional Vedic wisdom.
-- Your birth details are *never stored or shared*.
-- Sessions are prepaid and non-refundable after consultation begins.
+- All sessions are deeply personal, intuitive and rooted in traditional Vedic astrology.
+- Your data is never stored, sold or reused.
+- Consultations are prepaid and non-refundable once started.
 
 ---
 🪷 **Copyright © 2025 Vedic Vishwakarma**  
-Follow me on [Instagram](https://instagram.com/vedic.vishwakarma) for daily cosmic tips 🌙
+✨ Follow [@vedic.vishwakarma](https://instagram.com/vedic.vishwakarma) for daily astro tips & healing codes 🌙
 """)
